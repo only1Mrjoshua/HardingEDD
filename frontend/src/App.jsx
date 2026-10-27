@@ -16,10 +16,11 @@ import NotFound from './pages/NotFound';
 
 // Advisor imports
 import AdvisorLayout from './layouts/AdvisorLayout';
-import AdvisorOverview from './pages/advisor/Overview';
+import AdvisorCandidates from './pages/advisor/Candidates';
 import AssignedWorks from './pages/advisor/AssignedWorks';
 import AdvisorWorkDetails from './pages/advisor/WorkDetails';
 import AdvisorProfile from './pages/advisor/Profile';
+import AdvisorSettings from './pages/advisor/Settings';
 
 function RequireAuth({ children, allowedRole }) {
   const location = useLocation();
@@ -28,7 +29,6 @@ function RequireAuth({ children, allowedRole }) {
   }
   const session = getSession();
   if (allowedRole && session.user.role !== allowedRole) {
-    // Redirect to their respective home if they try to access the wrong dashboard
     return <Navigate to={`/${session.user.role}`} replace />;
   }
   return children;
@@ -69,10 +69,11 @@ export default function App() {
             </RequireAuth>
           }
         >
-          <Route index element={<AdvisorOverview />} />
-          <Route path="works" element={<AssignedWorks />} />
+          <Route index element={<AssignedWorks />} /> {/* Overview removed, now index */}
+          <Route path="candidates" element={<AdvisorCandidates />} />
           <Route path="works/:id" element={<AdvisorWorkDetails />} />
           <Route path="profile" element={<AdvisorProfile />} />
+          <Route path="settings" element={<AdvisorSettings />} /> {/* Added Settings */}
         </Route>
 
         <Route path="*" element={<NotFound />} />

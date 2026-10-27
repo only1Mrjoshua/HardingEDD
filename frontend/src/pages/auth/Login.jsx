@@ -3,7 +3,6 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import Logo from '../../components/Logo';
 import { login } from '../../api/auth';
 import { isAuthenticated } from '../../utils/auth';
 
@@ -54,7 +53,7 @@ export default function Login() {
       >
         <div className="absolute inset-0 bg-navy-950/85" aria-hidden="true" />
         <div className="relative">
-          <Logo variant="light" className="h-8 w-auto" />
+          <img src="/logo.svg" alt="Harding EDD" className="h-8 w-auto" />
         </div>
         <div className="relative">
           <span className="block h-0.5 w-10 bg-gold-500" aria-hidden="true" />
@@ -72,7 +71,7 @@ export default function Login() {
       <div className="flex items-center justify-center bg-white px-4 py-12 sm:px-6">
         <div className="w-full max-w-sm">
           <div className="lg:hidden">
-            <Logo variant="dark" className="h-8 w-auto" />
+            <img src="/logo-dark.svg" alt="Harding EDD" className="h-8 w-auto" />
           </div>
           <h2 className="mt-6 font-serif text-2xl text-navy-900 lg:mt-0">Sign in to your portal</h2>
           <p className="mt-1 text-sm text-muted">
@@ -140,8 +139,8 @@ export default function Login() {
           </form>
 
           <div className="mt-6 space-y-1 text-xs text-muted">
-            <p>Candidate: candidate@harding.test / Password123!</p>
-            <p>Advisor: advisor@harding.test / Password123!</p>
+            <p>Candidate: candidate@harding.edd / Password123!</p>
+            <p>Advisor: advisor@harding.edd / Password123!</p>
           </div>
         </div>
       </div>

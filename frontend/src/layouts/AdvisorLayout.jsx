@@ -3,18 +3,18 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   ChevronDown,
   FileText,
-  LayoutDashboard,
   LogOut,
   Menu,
   User,
+  Users,
   X,
 } from 'lucide-react';
 import { logout } from '../api/auth';
 import { getSession } from '../utils/auth';
 
 const NAV_ITEMS = [
-  { to: '/advisor', label: 'Overview', icon: LayoutDashboard, end: true },
-  { to: '/advisor/works', label: 'Assigned Works', icon: FileText },
+  { to: '/advisor', label: 'Assigned Works', icon: FileText, end: true },
+  { to: '/advisor/candidates', label: 'My Candidates', icon: Users },
   { to: '/advisor/profile', label: 'Profile', icon: User },
 ];
 

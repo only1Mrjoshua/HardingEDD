@@ -1,9 +1,21 @@
-import { works, people } from '../mock/data';
+import { works, people, candidates, committee } from '../mock/data';
 import { clone, delay } from './client';
+import { clearSession } from '../utils/auth';
+
+export async function getCandidates() {
+  await delay();
+  return clone(candidates);
+}
 
 export async function getAssignedWorks() {
   await delay();
-  return clone(works.filter((work) => work.currentHolder?.id === people.advisor.id));
+  const assigned = works
+    .filter((work) => work.currentHolder?.id === people.advisor.id)
+    .map((work) => {
+      const candidate = candidates.find((c) => c.id === work.candidateId);
+      return { ...work, candidateName: candidate ? candidate.name : 'Unknown Candidate' };
+    });
+  return clone(assigned);
 }
 
 export async function getWorkDetails(id) {
@@ -13,10 +25,16 @@ export async function getWorkDetails(id) {
   if (work.currentHolder?.id !== people.advisor.id) {
     throw new Error('This work is not assigned to you.');
   }
-  return clone(work);
+  const candidate = candidates.find((c) => c.id === work.candidateId);
+  return clone({ ...work, candidateName: candidate ? candidate.name : 'Unknown Candidate' });
 }
 
-export async function approveWork({ workId, comment }) {
+export async function getCommitteeMembers() {
+  await delay();
+  return clone(committee.filter((m) => m.id !== people.advisor.id));
+}
+
+export async function approveWork({ workId, comment, file }) {
   await delay(600);
   const work = works.find((item) => item.id === workId);
   if (!work) throw new Error('Work not found.');
@@ -31,21 +49,18 @@ export async function approveWork({ workId, comment }) {
     from: people.advisor,
     to: people.candidate,
     action: 'approved',
-    comment: comment || 'Approved.',
+    comment: comment || '',
+    file: file ? { id: `file-${Date.now()}`, name: file.name, size: `${Math.max(1, Math.round(file.size / 1024))} KB`, uploadedAt: now } : null,
     arrivedAt: now,
     durationMs: lastArrival ? Date.now() - new Date(lastArrival).getTime() : 0,
   });
   return clone(work);
 }
 
-export async function returnWork({ workId, comment }) {
+export async function returnWork({ workId, comment, file }) {
   await delay(600);
   const work = works.find((item) => item.id === workId);
   if (!work) throw new Error('Work not found.');
-
-  if (!comment.trim()) {
-    throw new Error('You must provide a comment when returning work.');
-  }
 
   const now = new Date().toISOString();
   const lastArrival = work.movements[work.movements.length - 1]?.arrivedAt;
@@ -57,9 +72,53 @@ export async function returnWork({ workId, comment }) {
     from: people.advisor,
     to: people.candidate,
     action: 'returned',
-    comment,
+    comment: comment || '',
+    file: file ? { id: `file-${Date.now()}`, name: file.name, size: `${Math.max(1, Math.round(file.size / 1024))} KB`, uploadedAt: now } : null,
     arrivedAt: now,
     durationMs: lastArrival ? Date.now() - new Date(lastArrival).getTime() : 0,
   });
   return clone(work);
+}
+
+export async function forwardWork({ workId, toMemberId, comment, file }) {
+  await delay(600);
+  const work = works.find((item) => item.id === workId);
+  if (!work) throw new Error('Work not found.');
+
+  const toMember = committee.find((m) => m.id === toMemberId);
+  if (!toMember) throw new Error('Committee member not found.');
+
+  const now = new Date().toISOString();
+  const lastArrival = work.movements[work.movements.length - 1]?.arrivedAt;
+
+  work.status = `with_${toMember.role.toLowerCase().replace(' ', '_')}`;
+  work.currentHolder = toMember;
+  work.movements.push({
+    id: `mv-${Date.now()}`,
+    from: people.advisor,
+    to: toMember,
+    action: 'forwarded',
+    comment: comment || '',
+    file: file ? { id: `file-${Date.now()}`, name: file.name, size: `${Math.max(1, Math.round(file.size / 1024))} KB`, uploadedAt: now } : null,
+    arrivedAt: now,
+    durationMs: lastArrival ? Date.now() - new Date(lastArrival).getTime() : 0,
+  });
+  return clone(work);
+}
+
+export async function changePassword({ currentPassword, newPassword }) {
+  await delay(400);
+  if (currentPassword !== 'Password123!') {
+    throw new Error('Your current password is not correct.');
+  }
+  if (!newPassword || newPassword.length < 8) {
+    throw new Error('Your new password must be at least 8 characters.');
+  }
+  return { ok: true };
+}
+
+export async function deleteAccount() {
+  await delay(800);
+  clearSession();
+  return { ok: true };
 }

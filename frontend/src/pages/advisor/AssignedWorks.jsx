@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Button from '../../components/Button';
 import DataTable from '../../components/DataTable';
@@ -14,6 +14,8 @@ export default function AssignedWorks() {
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchParams] = useSearchParams();
+  const candidateFilter = searchParams.get('candidate'); // <-- Updated
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -31,12 +33,17 @@ export default function AssignedWorks() {
     load();
   }, [load]);
 
+  const filteredWorks = candidateFilter 
+    ? works.filter(w => w.candidateId === candidateFilter) // <-- Updated
+    : works;
+
   const columns = [
     {
-      key: 'type',
-      header: 'Work',
-      render: (work) => <span className="font-medium text-navy-900">{work.type}</span>,
+      key: 'candidate',
+      header: 'Candidate', // <-- Updated
+      render: (work) => <span className="font-medium text-navy-900">{work.candidateName}</span>, // <-- Updated
     },
+    { key: 'type', header: 'Work', render: (work) => work.type },
     { key: 'version', header: 'Version', render: (work) => work.version || '—' },
     { key: 'status', header: 'Status', render: (work) => <StatusBadge status={work.status} /> },
     {
@@ -53,8 +60,7 @@ export default function AssignedWorks() {
       header: '',
       render: (work) => (
         <Button as={Link} to={`/advisor/works/${work.id}`} variant="secondary" size="sm">
-          Review
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          Review <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Button>
       ),
     },
@@ -65,20 +71,17 @@ export default function AssignedWorks() {
       <div>
         <h1 className="font-serif text-2xl text-navy-900 sm:text-3xl">Assigned Works</h1>
         <p className="mt-1 text-sm text-muted">
-          All dissertations currently waiting for your review and approval.
+          {candidateFilter ? 'Filtered by candidate.' : 'All dissertations currently waiting for your review.'}
         </p>
       </div>
 
       {loading && <LoadingSkeleton rows={3} label="Loading assigned works" />}
       {!loading && error && <ErrorState message={error} onRetry={load} />}
-      {!loading && !error && works.length === 0 && (
-        <EmptyState
-          title="No assigned works"
-          description="There are no dissertations waiting for your review at the moment."
-        />
+      {!loading && !error && filteredWorks.length === 0 && (
+        <EmptyState title="No works found" description="There are no works matching this view." />
       )}
-      {!loading && !error && works.length > 0 && (
-        <DataTable columns={columns} rows={works} getRowKey={(work) => work.id} />
+      {!loading && !error && filteredWorks.length > 0 && (
+        <DataTable columns={columns} rows={filteredWorks} getRowKey={(work) => work.id} />
       )}
     </div>
   );
