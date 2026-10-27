@@ -15,7 +15,7 @@ function ReadOnlyField({ label, value }) {
   return (
     <div className="border-b border-navy-100 py-2">
       <p className="text-xs uppercase tracking-wide text-muted">{label}</p>
-      <p className="mt-1 text-sm text-ink">{value || '—'}</p>
+      <p className="mt-1 text-sm text-ink break-words">{value || '—'}</p>
     </div>
   );
 }
@@ -87,23 +87,23 @@ export default function Profile() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      {/* Header section with wrap for mobile */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-2xl text-navy-900 sm:text-3xl">Profile</h1>
           <p className="mt-1 text-sm text-muted">Your candidate record and account details.</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button as={Link} to="/candidate/settings" variant="secondary">
             <Settings className="h-4 w-4" aria-hidden="true" />
             Settings
           </Button>
-          {!isEditing && (
+          {!isEditing ? (
             <Button onClick={() => setIsEditing(true)}>
               <Edit2 className="h-4 w-4" aria-hidden="true" />
               Edit Profile
             </Button>
-          )}
-          {isEditing && (
+          ) : (
             <>
               <Button variant="secondary" onClick={handleCancel} disabled={saving}>
                 <X className="h-4 w-4" aria-hidden="true" />
@@ -118,8 +118,9 @@ export default function Profile() {
         </div>
       </div>
 
+      {/* Added min-w-0 to prevent grid blowing out on mobile */}
       <div className="grid gap-5 lg:grid-cols-3">
-        <div className="space-y-5 lg:col-span-2">
+        <div className="min-w-0 space-y-5 lg:col-span-2">
           <Card title="Program Information">
             <div className="grid gap-4 sm:grid-cols-2">
               {isEditing ? (
@@ -211,7 +212,8 @@ export default function Profile() {
           </Card>
         </div>
 
-        <div className="space-y-5">
+        {/* Added min-w-0 here as well to contain the table */}
+        <div className="min-w-0 space-y-5">
           <Card title="Photo & Documents">
             <div className="flex flex-col items-center justify-center border border-navy-100 bg-white p-4 rounded-md">
               <img
