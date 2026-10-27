@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Logo from '../../components/Logo';
 import { login } from '../../api/auth';
 import { isAuthenticated } from '../../utils/auth';
 
@@ -27,8 +28,13 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      await login({ email, password });
-      navigate('/candidate', { replace: true });
+      const session = await login({ email, password });
+      // Redirect based on role
+      if (session.user.role === 'advisor') {
+        navigate('/advisor', { replace: true });
+      } else {
+        navigate('/candidate', { replace: true });
+      }
     } catch (err) {
       setError(err.message || 'Unable to sign in. Please try again.');
     } finally {
@@ -48,7 +54,7 @@ export default function Login() {
       >
         <div className="absolute inset-0 bg-navy-950/85" aria-hidden="true" />
         <div className="relative">
-          <img src="/logo.svg" alt="Harding EDD" className="h-6 w-auto" />
+          <Logo variant="light" className="h-8 w-auto" />
         </div>
         <div className="relative">
           <span className="block h-0.5 w-10 bg-gold-500" aria-hidden="true" />
@@ -66,11 +72,11 @@ export default function Login() {
       <div className="flex items-center justify-center bg-white px-4 py-12 sm:px-6">
         <div className="w-full max-w-sm">
           <div className="lg:hidden">
-            <img src="/logo-dark.svg" alt="Harding EDD" className="h-6 w-auto" />
+            <Logo variant="dark" className="h-8 w-auto" />
           </div>
           <h2 className="mt-6 font-serif text-2xl text-navy-900 lg:mt-0">Sign in to your portal</h2>
           <p className="mt-1 text-sm text-muted">
-            Use the email address on your candidate record.
+            Use the email address on your candidate or advisor record.
           </p>
 
           <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
@@ -133,9 +139,10 @@ export default function Login() {
             </Button>
           </form>
 
-          <p className="mt-6 text-xs text-muted">
-            Candidate demo login: candidate@harding.test / Password123!
-          </p>
+          <div className="mt-6 space-y-1 text-xs text-muted">
+            <p>Candidate: candidate@harding.test / Password123!</p>
+            <p>Advisor: advisor@harding.test / Password123!</p>
+          </div>
         </div>
       </div>
     </div>

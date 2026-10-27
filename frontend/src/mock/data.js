@@ -261,9 +261,9 @@ export const works = [
     type: 'Chapter 2',
     order: 3,
     version: 'v1',
-    status: 'with_reader_2',
+    status: 'with_advisor',
     submittedAt: daysAgo(16, 9, 30),
-    currentHolder: people.reader2,
+    currentHolder: people.advisor,
     files: [
       {
         id: 'file-ch2-1',
@@ -290,6 +290,15 @@ export const works = [
         comment: 'Framework is solid. Reader 2 should check the coding section.',
         arrivedAt: daysAgo(8, 14, 5),
         durationMs: 7 * DAY + 4 * HOUR,
+      },
+      {
+        id: 'mv-c2-3',
+        from: people.reader2,
+        to: people.advisor,
+        action: 'forwarded',
+        comment: 'Methodology is sound. Passing to the advisor for final review.',
+        arrivedAt: daysAgo(4, 10, 15),
+        durationMs: 4 * DAY + 3 * HOUR,
       },
     ],
   },
@@ -392,9 +401,9 @@ export const sideReviews = [
 export const notifications = [
   {
     id: 'n-1',
-    title: 'Chapter 2 is with Reader 2',
-    message: 'Dr. Priya Raman has had Chapter 2 for 8 days.',
-    date: daysAgo(8, 14, 5),
+    title: 'Chapter 2 is with the Advisor',
+    message: 'Dr. Elaine Whitfield is currently reviewing Chapter 2.',
+    date: daysAgo(4, 10, 15),
     read: false,
     workId: 'work-ch2',
   },
