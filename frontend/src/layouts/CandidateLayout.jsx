@@ -161,12 +161,13 @@ export default function CandidateLayout() {
                   </span>
                 )}
               </button>
+              
               {notifOpen && (
-                <div className="absolute right-0 top-11 z-50 w-80 overflow-hidden rounded-md border border-navy-100 bg-white shadow-lg">
+                <div className="absolute right-0 top-11 z-50 w-[280px] overflow-hidden rounded-md border border-navy-100 bg-white shadow-lg sm:w-80">
                   <div className="border-b border-navy-100 px-4 py-3">
                     <p className="text-sm font-semibold text-navy-900">Notifications</p>
                   </div>
-                  <ul className="max-h-80 divide-y divide-navy-100 overflow-y-auto">
+                  <ul className="max-h-72 divide-y divide-navy-100 overflow-y-auto sm:max-h-80">
                     {notifications.length === 0 && (
                       <li className="px-4 py-6 text-center text-sm text-muted">
                         No notifications yet.
@@ -175,16 +176,16 @@ export default function CandidateLayout() {
                     {notifications.slice(0, 5).map((item) => (
                       <li key={item.id} className="px-4 py-3">
                         <p
-                          className={`text-sm ${
+                          className={`text-xs sm:text-sm ${
                             item.read ? 'text-ink' : 'font-medium text-navy-900'
                           }`}
                         >
                           {item.title}
                         </p>
-                        <p className="mt-0.5 text-xs text-muted">{item.message}</p>
+                        <p className="mt-0.5 text-[11px] sm:text-xs text-muted">{item.message}</p>
                         <DateTimeText
                           value={item.date}
-                          className="mt-1 block text-[11px] text-muted"
+                          className="mt-1 block text-[10px] sm:text-[11px] text-muted"
                         />
                       </li>
                     ))}
@@ -212,6 +213,7 @@ export default function CandidateLayout() {
                 </span>
                 <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </button>
+              
               {userOpen && (
                 <div className="absolute right-0 top-11 z-50 w-60 overflow-hidden rounded-md border border-navy-100 bg-white shadow-lg">
                   <div className="border-b border-navy-100 px-4 py-3">

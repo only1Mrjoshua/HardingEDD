@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Prevent iOS auto-zoom on input focus */
+@media screen and (max-width: 767px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
 @theme {
   --color-navy-950: #071426;
   --color-navy-900: #0B1F3A;
