@@ -31,8 +31,31 @@ export async function getWorkDetails(id) {
 
 export async function getCommitteeMembers() {
   await delay();
-  // Return Reader 2 and Advisor for forwarding
-  return clone(committee.filter((m) => ['cm-reader2', 'cm-advisor'].includes(m.id)));
+  // Return everyone except Reader 1 (Reader 2, Advisor, Methodologist, Stylist)
+  return clone(committee.filter((m) => m.id !== people.reader1.id));
+}
+
+export async function returnWork({ workId, comment, file }) {
+  await delay(600);
+  const work = works.find((item) => item.id === workId);
+  if (!work) throw new Error('Work not found.');
+
+  const now = new Date().toISOString();
+  const lastArrival = work.movements[work.movements.length - 1]?.arrivedAt;
+
+  work.status = 'returned';
+  work.currentHolder = people.candidate;
+  work.movements.push({
+    id: `mv-${Date.now()}`,
+    from: people.reader1,
+    to: people.candidate,
+    action: 'returned',
+    comment: comment || '',
+    file: file ? { id: `file-${Date.now()}`, name: file.name, size: `${Math.max(1, Math.round(file.size / 1024))} KB`, uploadedAt: now } : null,
+    arrivedAt: now,
+    durationMs: lastArrival ? Date.now() - new Date(lastArrival).getTime() : 0,
+  });
+  return clone(work);
 }
 
 export async function forwardWork({ workId, toMemberId, comment, file }) {
@@ -53,29 +76,6 @@ export async function forwardWork({ workId, toMemberId, comment, file }) {
     from: people.reader1,
     to: toMember,
     action: 'forwarded',
-    comment: comment || '',
-    file: file ? { id: `file-${Date.now()}`, name: file.name, size: `${Math.max(1, Math.round(file.size / 1024))} KB`, uploadedAt: now } : null,
-    arrivedAt: now,
-    durationMs: lastArrival ? Date.now() - new Date(lastArrival).getTime() : 0,
-  });
-  return clone(work);
-}
-
-export async function returnWork({ workId, comment, file }) {
-  await delay(600);
-  const work = works.find((item) => item.id === workId);
-  if (!work) throw new Error('Work not found.');
-
-  const now = new Date().toISOString();
-  const lastArrival = work.movements[work.movements.length - 1]?.arrivedAt;
-
-  work.status = 'returned';
-  work.currentHolder = people.candidate;
-  work.movements.push({
-    id: `mv-${Date.now()}`,
-    from: people.reader1,
-    to: people.candidate,
-    action: 'returned',
     comment: comment || '',
     file: file ? { id: `file-${Date.now()}`, name: file.name, size: `${Math.max(1, Math.round(file.size / 1024))} KB`, uploadedAt: now } : null,
     arrivedAt: now,

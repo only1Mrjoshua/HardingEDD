@@ -122,7 +122,7 @@ export default function Reader1WorkDetails() {
                   onChange={() => setActionType('forward')} 
                   className="h-4 w-4 text-navy-700 focus:ring-navy-600" 
                 />
-                Forward to Next Reader / Advisor
+                Forward to Committee Member
               </label>
               <label className="flex items-center gap-2 text-sm font-medium text-ink cursor-pointer">
                 <input 
