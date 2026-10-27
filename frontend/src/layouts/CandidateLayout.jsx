@@ -88,7 +88,7 @@ export default function CandidateLayout() {
         }`}
       >
         <div className="flex h-16 items-center justify-between border-b border-navy-800 px-4">
-          <img src="/logo.svg" alt="Harding EDD" className="h-8 w-auto" />
+          <img src="/logo.svg" alt="Harding EDD" className="h-7 w-auto" />
           <button
             type="button"
             onClick={() => setMenuOpen(false)}

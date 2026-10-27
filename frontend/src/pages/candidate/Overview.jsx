@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, UserCheck } from 'lucide-react';
+import { ArrowRight, UserCheck } from 'lucide-react';
 import Card from '../../components/Card';
 import StatusBadge from '../../components/StatusBadge';
 import ProgressStepper from '../../components/ProgressStepper';
 import DeadlineBanner, { DeadlineCountdown } from '../../components/DeadlineBanner';
-import DateTimeText from '../../components/DateTimeText';
 import LoadingSkeleton from '../../components/LoadingSkeleton';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { getCandidate, getCohort, getNotifications } from '../../api/candidate';
+import { getCandidate, getCohort } from '../../api/candidate';
 import { getWorks } from '../../api/works';
 import { daysSince } from '../../utils/date';
 
@@ -22,13 +21,12 @@ export default function Overview() {
     setLoading(true);
     setError('');
     try {
-      const [candidate, cohort, works, notifications] = await Promise.all([
+      const [candidate, cohort, works] = await Promise.all([
         getCandidate(),
         getCohort(),
         getWorks(),
-        getNotifications(),
       ]);
-      setData({ candidate, cohort, works, notifications });
+      setData({ candidate, cohort, works });
     } catch (err) {
       setError(err.message || 'We could not load your overview.');
     } finally {
@@ -43,7 +41,7 @@ export default function Overview() {
   if (loading) return <LoadingSkeleton rows={4} label="Loading your overview" />;
   if (error) return <ErrorState message={error} onRetry={load} />;
 
-  const { candidate, cohort, works, notifications } = data;
+  const { candidate, cohort, works } = data;
   const activeWork = [...works]
     .reverse()
     .find((work) => work.status !== 'approved' && work.status !== 'not_started');
@@ -111,25 +109,6 @@ export default function Overview() {
           </p>
         </Card>
       </div>
-
-      <Card
-        title="Latest notifications"
-        action={<Clock className="h-4 w-4 text-muted" aria-hidden="true" />}
-      >
-        {notifications.length === 0 ? (
-          <EmptyState title="No notifications" description="Updates about your work will appear here." />
-        ) : (
-          <ul className="divide-y divide-navy-100">
-            {notifications.slice(0, 4).map((item) => (
-              <li key={item.id} className="py-3 first:pt-0 last:pb-0">
-                <p className="text-sm font-medium text-navy-900">{item.title}</p>
-                <p className="mt-0.5 text-sm text-ink">{item.message}</p>
-                <DateTimeText value={item.date} className="mt-1 block text-xs text-muted" />
-              </li>
-            ))}
-          </ul>
-        )}
-      </Card>
     </div>
   );
 }

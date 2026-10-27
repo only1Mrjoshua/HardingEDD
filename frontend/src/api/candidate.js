@@ -1,4 +1,4 @@
-import { candidate, cohort, committee, notifications, degrees } from '../mock/data';
+import { candidate, cohort, committee, degrees, notifications } from '../mock/data';
 import { clone, delay } from './client';
 import { clearSession } from '../utils/auth';
 
@@ -17,14 +17,14 @@ export async function getCommittee() {
   return clone(committee);
 }
 
-export async function getNotifications() {
-  await delay();
-  return clone(notifications);
-}
-
 export async function getDegrees() {
   await delay();
   return clone(degrees);
+}
+
+export async function getNotifications() {
+  await delay();
+  return clone(notifications);
 }
 
 export async function updateProfile(patch) {
