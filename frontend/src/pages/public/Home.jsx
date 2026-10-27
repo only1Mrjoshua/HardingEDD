@@ -42,7 +42,7 @@ export default function Home() {
       <header className="sticky top-0 z-20 bg-navy-900">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/" aria-label="Harding EDD home">
-            <img src="/logo.svg" alt="Harding EDD" className="h-9 w-auto" />
+            <img src="/logo.svg" alt="Harding EDD" className="h-6 w-auto" />
           </Link>
           <Button as={Link} to="/login" size="sm">
             Login
@@ -116,7 +116,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <img src="/logo.svg" alt="Harding EDD" className="h-9 w-auto" />
+              <img src="/logo.svg" alt="Harding EDD" className="h-6 w-auto" />
               <p className="mt-3 max-w-md text-sm text-navy-100">
                 Dissertation tracking for Ed.D. candidates at Harding.
               </p>
