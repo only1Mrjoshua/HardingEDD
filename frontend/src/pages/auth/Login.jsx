@@ -54,7 +54,7 @@ export default function Login() {
           <span className="block h-0.5 w-10 bg-gold-500" aria-hidden="true" />
           <h1 className="mt-4 font-serif text-4xl leading-tight text-white">Harding EDD</h1>
           <p className="mt-4 max-w-md text-base text-navy-100">
-            Follow your dissertation through every reader, every comment and every approval — from
+            Follow your dissertation through every reader, every comment and every approval, from
             the proposal to the final document.
           </p>
         </div>

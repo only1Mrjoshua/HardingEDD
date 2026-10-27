@@ -61,7 +61,7 @@ export default function Home() {
           </h1>
           <p className="mt-5 max-w-2xl text-base text-navy-100 sm:text-lg">
             Harding EDD follows every chapter as it moves from you to your readers, to your advisor.
-            See who has your work, what they said, and how long it has been there — all in one place.
+            See who has your work, what they said, and how long it has been there, all in one place.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Button as={Link} to="/login" size="lg">
