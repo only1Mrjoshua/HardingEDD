@@ -28,9 +28,12 @@ export default function Login() {
     setLoading(true);
     try {
       const session = await login({ email, password });
+      
       // Redirect based on role
       if (session.user.role === 'advisor') {
         navigate('/advisor', { replace: true });
+      } else if (session.user.role === 'reader1') {
+        navigate('/reader1', { replace: true });
       } else {
         navigate('/candidate', { replace: true });
       }
@@ -75,7 +78,7 @@ export default function Login() {
           </div>
           <h2 className="mt-6 font-serif text-2xl text-navy-900 lg:mt-0">Sign in to your portal</h2>
           <p className="mt-1 text-sm text-muted">
-            Use the email address on your candidate or advisor record.
+            Use the email address on your candidate or committee record.
           </p>
 
           <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
@@ -139,8 +142,10 @@ export default function Login() {
           </form>
 
           <div className="mt-6 space-y-1 text-xs text-muted">
-            <p>Candidate: candidate@harding.edd / Password123!</p>
-            <p>Advisor: advisor@harding.edd / Password123!</p>
+            <p className="font-medium text-ink mb-2">Demo Credentials</p>
+            <p>Candidate: candidate@harding.test / Password123!</p>
+            <p>Advisor: advisor@harding.test / Password123!</p>
+            <p>Reader 1: reader1@harding.test / Password123!</p>
           </div>
         </div>
       </div>

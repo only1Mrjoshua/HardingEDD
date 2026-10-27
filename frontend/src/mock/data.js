@@ -145,19 +145,31 @@ export const works = [
     ],
   },
   {
-    id: 'work-c2-ch1',
+    id: 'work-c2-prop', // New work for Reader 1
     candidateId: 'cand-2',
-    type: 'Chapter 1',
-    order: 2,
+    type: 'Proposal',
+    order: 1,
     version: 'v1',
-    status: 'with_advisor',
-    submittedAt: daysAgo(20, 14, 0),
-    currentHolder: people.advisor,
-    files: [{ id: 'file-c2ch1-1', name: 'Chapter1_Michael_Smith_v1.docx', size: '380 KB', uploadedAt: daysAgo(20, 14, 0) }],
+    status: 'with_reader_1',
+    submittedAt: daysAgo(2, 14, 30),
+    currentHolder: people.reader1,
+    files: [{ id: 'file-c2prop-1', name: 'Proposal_Michael_Smith_v1.docx', size: '210 KB', uploadedAt: daysAgo(2, 14, 30) }],
     movements: [
-      { id: 'mv-c2ch1-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Submitting my first chapter.', arrivedAt: daysAgo(20, 14, 0), durationMs: 10 * DAY },
-      { id: 'mv-c2ch1-2', from: people.reader1, to: people.reader2, action: 'forwarded', comment: 'Looks good.', arrivedAt: daysAgo(10, 9, 0), durationMs: 5 * DAY },
-      { id: 'mv-c2ch1-3', from: people.reader2, to: people.advisor, action: 'forwarded', comment: 'Ready for your review.', arrivedAt: daysAgo(5, 11, 30), durationMs: 5 * DAY },
+      { id: 'mv-c2prop-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Here is my proposal for review.', arrivedAt: daysAgo(2, 14, 30), durationMs: 0 },
+    ],
+  },
+  {
+    id: 'work-ch4', // New work for Reader 1
+    candidateId: 'cand-1',
+    type: 'Chapter 4',
+    order: 5,
+    version: 'v1',
+    status: 'with_reader_1',
+    submittedAt: daysAgo(5, 10, 0),
+    currentHolder: people.reader1,
+    files: [{ id: 'file-ch4-1', name: 'Chapter4_Amara_Okafor_v1.docx', size: '450 KB', uploadedAt: daysAgo(5, 10, 0) }],
+    movements: [
+      { id: 'mv-c4-1', from: people.candidate, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 4.', arrivedAt: daysAgo(5, 10, 0), durationMs: 0 },
     ],
   },
   {

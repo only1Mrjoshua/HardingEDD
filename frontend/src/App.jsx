@@ -22,6 +22,14 @@ import AdvisorWorkDetails from './pages/advisor/WorkDetails';
 import AdvisorProfile from './pages/advisor/Profile';
 import AdvisorSettings from './pages/advisor/Settings';
 
+// Reader 1 imports
+import Reader1Layout from './layouts/Reader1Layout';
+import Reader1AssignedWorks from './pages/reader1/AssignedWorks';
+import Reader1Candidates from './pages/reader1/Candidates';
+import Reader1WorkDetails from './pages/reader1/WorkDetails';
+import Reader1Profile from './pages/reader1/Profile';
+import Reader1Settings from './pages/reader1/Settings';
+
 function RequireAuth({ children, allowedRole }) {
   const location = useLocation();
   if (!isAuthenticated()) {
@@ -69,11 +77,27 @@ export default function App() {
             </RequireAuth>
           }
         >
-          <Route index element={<AssignedWorks />} /> {/* Overview removed, now index */}
+          <Route index element={<AssignedWorks />} />
           <Route path="candidates" element={<AdvisorCandidates />} />
           <Route path="works/:id" element={<AdvisorWorkDetails />} />
           <Route path="profile" element={<AdvisorProfile />} />
-          <Route path="settings" element={<AdvisorSettings />} /> {/* Added Settings */}
+          <Route path="settings" element={<AdvisorSettings />} />
+        </Route>
+
+        {/* Reader 1 Routes */}
+        <Route
+          path="/reader1"
+          element={
+            <RequireAuth allowedRole="reader1">
+              <Reader1Layout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<Reader1AssignedWorks />} />
+          <Route path="candidates" element={<Reader1Candidates />} />
+          <Route path="works/:id" element={<Reader1WorkDetails />} />
+          <Route path="profile" element={<Reader1Profile />} />
+          <Route path="settings" element={<Reader1Settings />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
