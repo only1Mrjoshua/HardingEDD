@@ -46,6 +46,14 @@ import MethodologistWorkDetails from './pages/methodologist/WorkDetails';
 import MethodologistProfile from './pages/methodologist/Profile';
 import MethodologistSettings from './pages/methodologist/Settings';
 
+// Stylist imports
+import StylistLayout from './layouts/StylistLayout';
+import StylistAssignedWorks from './pages/stylist/AssignedWorks';
+import StylistCandidates from './pages/stylist/Candidates';
+import StylistWorkDetails from './pages/stylist/WorkDetails';
+import StylistProfile from './pages/stylist/Profile';
+import StylistSettings from './pages/stylist/Settings';
+
 function RequireAuth({ children, allowedRole }) {
   const location = useLocation();
   if (!isAuthenticated()) {
@@ -146,6 +154,22 @@ export default function App() {
           <Route path="reviews/:id" element={<MethodologistWorkDetails />} />
           <Route path="profile" element={<MethodologistProfile />} />
           <Route path="settings" element={<MethodologistSettings />} />
+        </Route>
+
+        {/* Stylist Routes */}
+        <Route
+          path="/stylist"
+          element={
+            <RequireAuth allowedRole="stylist">
+              <StylistLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<StylistAssignedWorks />} />
+          <Route path="candidates" element={<StylistCandidates />} />
+          <Route path="works/:id" element={<StylistWorkDetails />} />
+          <Route path="profile" element={<StylistProfile />} />
+          <Route path="settings" element={<StylistSettings />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

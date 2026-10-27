@@ -142,7 +142,7 @@ export const works = [
     type: 'Chapter 2',
     order: 3,
     version: 'v1',
-    status: 'with_methodologist', // <-- Assigned to Methodologist
+    status: 'with_methodologist',
     submittedAt: daysAgo(16, 9, 30),
     currentHolder: people.methodologist,
     files: [{ id: 'file-ch2-1', name: 'Chapter2_Amara_Okafor_v1.docx', size: '536 KB', uploadedAt: daysAgo(16, 9, 30) }],
@@ -174,7 +174,7 @@ export const works = [
     type: 'Chapter 3',
     order: 4,
     version: 'v1',
-    status: 'with_methodologist', // <-- Assigned to Methodologist
+    status: 'with_methodologist',
     submittedAt: daysAgo(6, 11, 0),
     currentHolder: people.methodologist,
     files: [{ id: 'file-c2ch3-1', name: 'Chapter3_Michael_Smith_v1.docx', size: '410 KB', uploadedAt: daysAgo(6, 11, 0) }],
@@ -200,9 +200,24 @@ export const works = [
       { id: 'mv-c3-3', from: people.reader2, to: people.candidate, action: 'returned', comment: 'The sampling frame is not justified and the consent procedure is unclear. Please revise sections 3.3 and 3.6 and resubmit.', arrivedAt: daysAgo(12, 16, 30), durationMs: 20 * DAY + 6 * HOUR },
     ],
   },
+  {
+    id: 'work-c2-ch4', // <-- Assigned to the Stylist
+    candidateId: 'cand-2',
+    type: 'Chapter 4',
+    order: 5,
+    version: 'v1',
+    status: 'with_stylist',
+    submittedAt: daysAgo(3, 9, 0),
+    currentHolder: people.stylist,
+    files: [{ id: 'file-c2ch4-1', name: 'Chapter4_Michael_Smith_v1.docx', size: '420 KB', uploadedAt: daysAgo(3, 9, 0) }],
+    movements: [
+      { id: 'mv-c2ch4-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 4.', arrivedAt: daysAgo(3, 9, 0), durationMs: 2 * DAY },
+      { id: 'mv-c2ch4-2', from: people.reader1, to: people.stylist, action: 'forwarded', comment: 'Sent for style review.', arrivedAt: daysAgo(1, 14, 0), durationMs: 2 * DAY + 5 * HOUR },
+    ],
+  },
 ];
 
-export const sideReviews = []; // Removed as it's now handled via the normal pipeline
+export const sideReviews = [];
 
 export const notifications = [
   { id: 'n-1', title: 'Chapter 2 is with the Methodologist', message: 'Dr. Samuel Osei is currently reviewing Chapter 2.', date: daysAgo(2, 10, 0), read: false, workId: 'work-ch2' },

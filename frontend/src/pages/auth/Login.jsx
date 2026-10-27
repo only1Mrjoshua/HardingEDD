@@ -38,6 +38,8 @@ export default function Login() {
         navigate('/reader2', { replace: true });
       } else if (session.user.role === 'methodologist') {
         navigate('/methodologist', { replace: true });
+      } else if (session.user.role === 'stylist') {
+        navigate('/stylist', { replace: true });
       } else {
         navigate('/candidate', { replace: true });
       }
@@ -152,6 +154,7 @@ export default function Login() {
             <p>Reader 1: reader1@harding.test / Password123!</p>
             <p>Reader 2: reader2@harding.test / Password123!</p>
             <p>Methodologist: methodologist@harding.test / Password123!</p>
+            <p>Stylist: stylist@harding.test / Password123!</p>
           </div>
         </div>
       </div>
