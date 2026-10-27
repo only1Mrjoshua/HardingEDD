@@ -5,6 +5,8 @@ import { delay } from './client';
 const CANDIDATE_EMAIL = 'candidate@harding.test';
 const ADVISOR_EMAIL = 'advisor@harding.test';
 const READER1_EMAIL = 'reader1@harding.test';
+const READER2_EMAIL = 'reader2@harding.test';
+const METHODOLOGIST_EMAIL = 'methodologist@harding.test';
 const PASSWORD = 'Password123!';
 
 export async function login({ email, password }) {
@@ -38,6 +40,24 @@ export async function login({ email, password }) {
     const session = {
       token: 'fake-session-token-reader1',
       user: { id: people.reader1.id, name: people.reader1.name, email: READER1_EMAIL, role: 'reader1' },
+    };
+    setSession(session);
+    return session;
+  }
+
+  if (normalizedEmail === READER2_EMAIL) {
+    const session = {
+      token: 'fake-session-token-reader2',
+      user: { id: people.reader2.id, name: people.reader2.name, email: READER2_EMAIL, role: 'reader2' },
+    };
+    setSession(session);
+    return session;
+  }
+
+  if (normalizedEmail === METHODOLOGIST_EMAIL) {
+    const session = {
+      token: 'fake-session-token-methodologist',
+      user: { id: people.methodologist.id, name: people.methodologist.name, email: METHODOLOGIST_EMAIL, role: 'methodologist' },
     };
     setSession(session);
     return session;

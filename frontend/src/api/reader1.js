@@ -1,10 +1,11 @@
-import { works, people, candidates, committee } from '../mock/data';
+import { works, people, candidates, committee, assignments } from '../mock/data';
 import { clone, delay } from './client';
 import { clearSession } from '../utils/auth';
 
 export async function getCandidates() {
   await delay();
-  return clone(candidates);
+  const assignedIds = assignments[people.reader1.id] || [];
+  return clone(candidates.filter((c) => assignedIds.includes(c.id)));
 }
 
 export async function getAssignedWorks() {
@@ -31,7 +32,6 @@ export async function getWorkDetails(id) {
 
 export async function getCommitteeMembers() {
   await delay();
-  // Return everyone except Reader 1 (Reader 2, Advisor, Methodologist, Stylist)
   return clone(committee.filter((m) => m.id !== people.reader1.id));
 }
 

@@ -30,6 +30,22 @@ import Reader1WorkDetails from './pages/reader1/WorkDetails';
 import Reader1Profile from './pages/reader1/Profile';
 import Reader1Settings from './pages/reader1/Settings';
 
+// Reader 2 imports
+import Reader2Layout from './layouts/Reader2Layout';
+import Reader2AssignedWorks from './pages/reader2/AssignedWorks';
+import Reader2Candidates from './pages/reader2/Candidates';
+import Reader2WorkDetails from './pages/reader2/WorkDetails';
+import Reader2Profile from './pages/reader2/Profile';
+import Reader2Settings from './pages/reader2/Settings';
+
+// Methodologist imports
+import MethodologistLayout from './layouts/MethodologistLayout';
+import MethodologistAssignedReviews from './pages/methodologist/AssignedReviews';
+import MethodologistCandidates from './pages/methodologist/Candidates';
+import MethodologistWorkDetails from './pages/methodologist/WorkDetails';
+import MethodologistProfile from './pages/methodologist/Profile';
+import MethodologistSettings from './pages/methodologist/Settings';
+
 function RequireAuth({ children, allowedRole }) {
   const location = useLocation();
   if (!isAuthenticated()) {
@@ -98,6 +114,38 @@ export default function App() {
           <Route path="works/:id" element={<Reader1WorkDetails />} />
           <Route path="profile" element={<Reader1Profile />} />
           <Route path="settings" element={<Reader1Settings />} />
+        </Route>
+
+        {/* Reader 2 Routes */}
+        <Route
+          path="/reader2"
+          element={
+            <RequireAuth allowedRole="reader2">
+              <Reader2Layout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<Reader2AssignedWorks />} />
+          <Route path="candidates" element={<Reader2Candidates />} />
+          <Route path="works/:id" element={<Reader2WorkDetails />} />
+          <Route path="profile" element={<Reader2Profile />} />
+          <Route path="settings" element={<Reader2Settings />} />
+        </Route>
+
+        {/* Methodologist Routes */}
+        <Route
+          path="/methodologist"
+          element={
+            <RequireAuth allowedRole="methodologist">
+              <MethodologistLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<MethodologistAssignedReviews />} />
+          <Route path="candidates" element={<MethodologistCandidates />} />
+          <Route path="reviews/:id" element={<MethodologistWorkDetails />} />
+          <Route path="profile" element={<MethodologistProfile />} />
+          <Route path="settings" element={<MethodologistSettings />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

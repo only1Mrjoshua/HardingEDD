@@ -1,10 +1,11 @@
-import { works, people, candidates, committee } from '../mock/data';
+import { works, people, candidates, committee, assignments } from '../mock/data';
 import { clone, delay } from './client';
 import { clearSession } from '../utils/auth';
 
 export async function getCandidates() {
   await delay();
-  return clone(candidates);
+  const assignedIds = assignments[people.advisor.id] || [];
+  return clone(candidates.filter((c) => assignedIds.includes(c.id)));
 }
 
 export async function getAssignedWorks() {

@@ -34,6 +34,10 @@ export default function Login() {
         navigate('/advisor', { replace: true });
       } else if (session.user.role === 'reader1') {
         navigate('/reader1', { replace: true });
+      } else if (session.user.role === 'reader2') {
+        navigate('/reader2', { replace: true });
+      } else if (session.user.role === 'methodologist') {
+        navigate('/methodologist', { replace: true });
       } else {
         navigate('/candidate', { replace: true });
       }
@@ -146,6 +150,8 @@ export default function Login() {
             <p>Candidate: candidate@harding.test / Password123!</p>
             <p>Advisor: advisor@harding.test / Password123!</p>
             <p>Reader 1: reader1@harding.test / Password123!</p>
+            <p>Reader 2: reader2@harding.test / Password123!</p>
+            <p>Methodologist: methodologist@harding.test / Password123!</p>
           </div>
         </div>
       </div>

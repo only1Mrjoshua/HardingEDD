@@ -19,6 +19,14 @@ export const people = {
   stylist: { id: 'cm-stylist', name: 'Dr. Hannah Kline', role: 'Stylist' },
 };
 
+export const assignments = {
+  'cm-advisor': ['cand-1', 'cand-2'],
+  'cm-reader1': ['cand-1', 'cand-2'],
+  'cm-reader2': ['cand-1', 'cand-2'],
+  'cm-methodologist': ['cand-1', 'cand-2'],
+  'cm-stylist': ['cand-1', 'cand-2'],
+};
+
 const deadline = new Date(NOW.getTime() + 68 * DAY);
 deadline.setHours(17, 0, 0, 0);
 
@@ -134,42 +142,46 @@ export const works = [
     type: 'Chapter 2',
     order: 3,
     version: 'v1',
-    status: 'with_advisor',
+    status: 'with_methodologist', // <-- Assigned to Methodologist
     submittedAt: daysAgo(16, 9, 30),
-    currentHolder: people.advisor,
+    currentHolder: people.methodologist,
     files: [{ id: 'file-ch2-1', name: 'Chapter2_Amara_Okafor_v1.docx', size: '536 KB', uploadedAt: daysAgo(16, 9, 30) }],
     movements: [
       { id: 'mv-c2-1', from: people.candidate, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 2 on the new leadership framework.', arrivedAt: daysAgo(16, 9, 30), durationMs: 10 * DAY + 4 * HOUR },
       { id: 'mv-c2-2', from: people.reader1, to: people.reader2, action: 'forwarded', comment: 'Framework is solid. Reader 2 should check the coding section.', arrivedAt: daysAgo(8, 14, 5), durationMs: 7 * DAY + 4 * HOUR },
-      { id: 'mv-c2-3', from: people.reader2, to: people.advisor, action: 'forwarded', comment: 'Methodology is sound. Passing to the advisor for final review.', arrivedAt: daysAgo(4, 10, 15), durationMs: 4 * DAY + 3 * HOUR },
+      { id: 'mv-c2-3', from: people.reader2, to: people.methodologist, action: 'forwarded', comment: 'Sent for methodology review.', arrivedAt: daysAgo(2, 10, 0), durationMs: 6 * DAY + 20 * HOUR },
     ],
   },
   {
-    id: 'work-c2-prop', // New work for Reader 1
+    id: 'work-c2-ch1',
     candidateId: 'cand-2',
-    type: 'Proposal',
-    order: 1,
+    type: 'Chapter 1',
+    order: 2,
     version: 'v1',
-    status: 'with_reader_1',
-    submittedAt: daysAgo(2, 14, 30),
-    currentHolder: people.reader1,
-    files: [{ id: 'file-c2prop-1', name: 'Proposal_Michael_Smith_v1.docx', size: '210 KB', uploadedAt: daysAgo(2, 14, 30) }],
+    status: 'with_advisor',
+    submittedAt: daysAgo(20, 14, 0),
+    currentHolder: people.advisor,
+    files: [{ id: 'file-c2ch1-1', name: 'Chapter1_Michael_Smith_v1.docx', size: '380 KB', uploadedAt: daysAgo(20, 14, 0) }],
     movements: [
-      { id: 'mv-c2prop-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Here is my proposal for review.', arrivedAt: daysAgo(2, 14, 30), durationMs: 0 },
+      { id: 'mv-c2ch1-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Submitting my first chapter.', arrivedAt: daysAgo(20, 14, 0), durationMs: 10 * DAY },
+      { id: 'mv-c2ch1-2', from: people.reader1, to: people.reader2, action: 'forwarded', comment: 'Looks good.', arrivedAt: daysAgo(10, 9, 0), durationMs: 5 * DAY },
+      { id: 'mv-c2ch1-3', from: people.reader2, to: people.advisor, action: 'forwarded', comment: 'Ready for your review.', arrivedAt: daysAgo(5, 11, 30), durationMs: 5 * DAY },
     ],
   },
   {
-    id: 'work-ch4', // New work for Reader 1
-    candidateId: 'cand-1',
-    type: 'Chapter 4',
-    order: 5,
+    id: 'work-c2-ch3',
+    candidateId: 'cand-2',
+    type: 'Chapter 3',
+    order: 4,
     version: 'v1',
-    status: 'with_reader_1',
-    submittedAt: daysAgo(5, 10, 0),
-    currentHolder: people.reader1,
-    files: [{ id: 'file-ch4-1', name: 'Chapter4_Amara_Okafor_v1.docx', size: '450 KB', uploadedAt: daysAgo(5, 10, 0) }],
+    status: 'with_methodologist', // <-- Assigned to Methodologist
+    submittedAt: daysAgo(6, 11, 0),
+    currentHolder: people.methodologist,
+    files: [{ id: 'file-c2ch3-1', name: 'Chapter3_Michael_Smith_v1.docx', size: '410 KB', uploadedAt: daysAgo(6, 11, 0) }],
     movements: [
-      { id: 'mv-c4-1', from: people.candidate, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 4.', arrivedAt: daysAgo(5, 10, 0), durationMs: 0 },
+      { id: 'mv-c2ch3-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 3.', arrivedAt: daysAgo(6, 11, 0), durationMs: 2 * DAY },
+      { id: 'mv-c2ch3-2', from: people.reader1, to: people.reader2, action: 'forwarded', comment: 'Looks ready for the second read.', arrivedAt: daysAgo(4, 15, 30), durationMs: 2 * DAY },
+      { id: 'mv-c2ch3-3', from: people.reader2, to: people.methodologist, action: 'forwarded', comment: 'Please check the sampling frame.', arrivedAt: daysAgo(1, 9, 0), durationMs: 3 * DAY + 17 * HOUR },
     ],
   },
   {
@@ -190,20 +202,9 @@ export const works = [
   },
 ];
 
-export const sideReviews = [
-  {
-    id: 'sr-1',
-    workId: 'work-ch3',
-    reviewer: people.methodologist,
-    status: 'completed',
-    requestedAt: daysAgo(20, 10, 0),
-    completedAt: daysAgo(17, 14, 20),
-    durationMs: 3 * DAY + 4 * HOUR,
-    comment: 'Methodology is sound, but the sampling frame needs to be justified more explicitly and the consent timeline should match the recruitment window.',
-  },
-];
+export const sideReviews = []; // Removed as it's now handled via the normal pipeline
 
 export const notifications = [
-  { id: 'n-1', title: 'Chapter 2 is with the Advisor', message: 'Dr. Elaine Whitfield is currently reviewing Chapter 2.', date: daysAgo(4, 10, 15), read: false, workId: 'work-ch2' },
+  { id: 'n-1', title: 'Chapter 2 is with the Methodologist', message: 'Dr. Samuel Osei is currently reviewing Chapter 2.', date: daysAgo(2, 10, 0), read: false, workId: 'work-ch2' },
   { id: 'n-2', title: 'Chapter 3 returned to you', message: 'Reader 2 returned Chapter 3 with comments on sections 3.3 and 3.6.', date: daysAgo(12, 16, 30), read: false, workId: 'work-ch3' },
 ];
