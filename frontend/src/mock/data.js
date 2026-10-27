@@ -12,6 +12,8 @@ function daysAgo(days, hour, minute) {
 export const people = {
   candidate: { id: 'cand-1', name: 'Amara Okafor', role: 'Candidate' },
   candidate2: { id: 'cand-2', name: 'Michael Smith', role: 'Candidate' },
+  candidate3: { id: 'cand-3', name: 'Sarah Jenkins', role: 'Candidate' },
+  candidate4: { id: 'cand-4', name: 'David Chen', role: 'Candidate' },
   advisor: { id: 'cm-advisor', name: 'Dr. Elaine Whitfield', role: 'Advisor' },
   reader1: { id: 'cm-reader1', name: 'Dr. Marcus Bell', role: 'Reader 1' },
   reader2: { id: 'cm-reader2', name: 'Dr. Priya Raman', role: 'Reader 2' },
@@ -19,12 +21,13 @@ export const people = {
   stylist: { id: 'cm-stylist', name: 'Dr. Hannah Kline', role: 'Stylist' },
 };
 
+// Every committee member is assigned to all 4 candidates
 export const assignments = {
-  'cm-advisor': ['cand-1', 'cand-2'],
-  'cm-reader1': ['cand-1', 'cand-2'],
-  'cm-reader2': ['cand-1', 'cand-2'],
-  'cm-methodologist': ['cand-1', 'cand-2'],
-  'cm-stylist': ['cand-1', 'cand-2'],
+  'cm-advisor': ['cand-1', 'cand-2', 'cand-3', 'cand-4'],
+  'cm-reader1': ['cand-1', 'cand-2', 'cand-3', 'cand-4'],
+  'cm-reader2': ['cand-1', 'cand-2', 'cand-3', 'cand-4'],
+  'cm-methodologist': ['cand-1', 'cand-2', 'cand-3', 'cand-4'],
+  'cm-stylist': ['cand-1', 'cand-2', 'cand-3', 'cand-4'],
 };
 
 const deadline = new Date(NOW.getTime() + 68 * DAY);
@@ -36,12 +39,8 @@ export const cohort = {
   deadline: deadline.toISOString(),
 };
 
-export const candidate = {
-  id: 'cand-1',
-  name: 'Amara Okafor',
-  email: 'candidate@harding.test',
+const baseCandidate = {
   avatar: '/avatar-placeholder.png',
-  candidateNumber: 'C-2014-084',
   programSeeking: 'Doctor of Education',
   preferredLocation: 'Searcy, AR',
   cohortName: 'Fall 2014',
@@ -49,20 +48,15 @@ export const candidate = {
   mustComplete: 'Fall 2021',
   status: 'On-Going',
   dateGraduated: '',
-  firstName: 'Amara',
   middleName: '',
-  lastName: 'Okafor',
-  preferredName: 'Amara',
   maidenName: '',
   address: '226 Harding Drive',
   city: 'Ann Arbor',
   state: 'MI',
   zip: '48197',
-  primaryEmail: 'candidate@harding.test',
   otherEmail: '',
   homePhone: '0909009',
   mobilePhone: '009000',
-  dob: '1989-03-12',
   churchAffiliation: 'COC',
   schoolEmployer: 'Obong',
   workPhone: 'NA',
@@ -70,8 +64,21 @@ export const candidate = {
   documentsCount: 3,
 };
 
+export const candidate = {
+  ...baseCandidate,
+  id: 'cand-1',
+  name: 'Amara Okafor',
+  email: 'candidate@harding.test',
+  candidateNumber: 'C-2014-084',
+  firstName: 'Amara',
+  lastName: 'Okafor',
+  preferredName: 'Amara',
+  primaryEmail: 'candidate@harding.test',
+  dob: '1989-03-12',
+};
+
 export const candidate2 = {
-  ...candidate,
+  ...baseCandidate,
   id: 'cand-2',
   name: 'Michael Smith',
   email: 'michael@harding.test',
@@ -79,9 +86,37 @@ export const candidate2 = {
   firstName: 'Michael',
   lastName: 'Smith',
   preferredName: 'Mike',
+  primaryEmail: 'michael@harding.test',
+  dob: '1990-07-22',
 };
 
-export const candidates = [candidate, candidate2];
+export const candidate3 = {
+  ...baseCandidate,
+  id: 'cand-3',
+  name: 'Sarah Jenkins',
+  email: 'sarah@harding.test',
+  candidateNumber: 'C-2014-145',
+  firstName: 'Sarah',
+  lastName: 'Jenkins',
+  preferredName: 'Sarah',
+  primaryEmail: 'sarah@harding.test',
+  dob: '1985-11-05',
+};
+
+export const candidate4 = {
+  ...baseCandidate,
+  id: 'cand-4',
+  name: 'David Chen',
+  email: 'david@harding.test',
+  candidateNumber: 'C-2014-156',
+  firstName: 'David',
+  lastName: 'Chen',
+  preferredName: 'Dave',
+  primaryEmail: 'david@harding.test',
+  dob: '1992-02-18',
+};
+
+export const candidates = [candidate, candidate2, candidate3, candidate4];
 
 export const degrees = [
   { id: 'deg-1', degree: 'B.Sc Economics', institution: 'Obong University', graduationDate: '2020-01-09' },
@@ -201,7 +236,7 @@ export const works = [
     ],
   },
   {
-    id: 'work-c2-ch4', // <-- Assigned to the Stylist
+    id: 'work-c2-ch4',
     candidateId: 'cand-2',
     type: 'Chapter 4',
     order: 5,
@@ -213,6 +248,54 @@ export const works = [
     movements: [
       { id: 'mv-c2ch4-1', from: people.candidate2, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 4.', arrivedAt: daysAgo(3, 9, 0), durationMs: 2 * DAY },
       { id: 'mv-c2ch4-2', from: people.reader1, to: people.stylist, action: 'forwarded', comment: 'Sent for style review.', arrivedAt: daysAgo(1, 14, 0), durationMs: 2 * DAY + 5 * HOUR },
+    ],
+  },
+  // New work for Reader 1
+  {
+    id: 'work-c3-ch1',
+    candidateId: 'cand-3',
+    type: 'Chapter 1',
+    order: 2,
+    version: 'v1',
+    status: 'with_reader_1',
+    submittedAt: daysAgo(4, 10, 0),
+    currentHolder: people.reader1,
+    files: [{ id: 'file-c3ch1-1', name: 'Chapter1_Sarah_Jenkins_v1.docx', size: '390 KB', uploadedAt: daysAgo(4, 10, 0) }],
+    movements: [
+      { id: 'mv-c3ch1-1', from: people.candidate3, to: people.reader1, action: 'submitted', comment: 'Here is my first chapter for review.', arrivedAt: daysAgo(4, 10, 0), durationMs: 0 },
+    ],
+  },
+  // New work for Reader 2
+  {
+    id: 'work-c4-ch2',
+    candidateId: 'cand-4',
+    type: 'Chapter 2',
+    order: 3,
+    version: 'v1',
+    status: 'with_reader_2',
+    submittedAt: daysAgo(5, 15, 0),
+    currentHolder: people.reader2,
+    files: [{ id: 'file-c4ch2-1', name: 'Chapter2_David_Chen_v1.docx', size: '520 KB', uploadedAt: daysAgo(5, 15, 0) }],
+    movements: [
+      { id: 'mv-c4ch2-1', from: people.candidate4, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 2.', arrivedAt: daysAgo(5, 15, 0), durationMs: 1 * DAY },
+      { id: 'mv-c4ch2-2', from: people.reader1, to: people.reader2, action: 'forwarded', comment: 'Ready for your review.', arrivedAt: daysAgo(4, 9, 0), durationMs: 1 * DAY },
+    ],
+  },
+  // New work for Advisor (so they have more than 1)
+  {
+    id: 'work-c1-ch4',
+    candidateId: 'cand-1',
+    type: 'Chapter 4',
+    order: 5,
+    version: 'v1',
+    status: 'with_advisor',
+    submittedAt: daysAgo(7, 9, 0),
+    currentHolder: people.advisor,
+    files: [{ id: 'file-c1ch4-1', name: 'Chapter4_Amara_Okafor_v1.docx', size: '610 KB', uploadedAt: daysAgo(7, 9, 0) }],
+    movements: [
+      { id: 'mv-c1ch4-1', from: people.candidate, to: people.reader1, action: 'submitted', comment: 'Submitting Chapter 4.', arrivedAt: daysAgo(7, 9, 0), durationMs: 2 * DAY },
+      { id: 'mv-c1ch4-2', from: people.reader1, to: people.reader2, action: 'forwarded', comment: 'Looking good.', arrivedAt: daysAgo(5, 9, 0), durationMs: 2 * DAY },
+      { id: 'mv-c1ch4-3', from: people.reader2, to: people.advisor, action: 'forwarded', comment: 'Ready for final approval.', arrivedAt: daysAgo(2, 14, 0), durationMs: 2 * DAY + 5 * HOUR },
     ],
   },
 ];
