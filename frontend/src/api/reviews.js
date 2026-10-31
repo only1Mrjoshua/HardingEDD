@@ -1,13 +1,16 @@
-import { sideReviews, works } from '../mock/data';
+import { sideReviews, works, candidate } from '../mock/data';
 import { clone, delay } from './client';
 
-const REVIEWER_ROLES = ['Reader 1', 'Reader 2', 'Advisor'];
+const REVIEWER_ROLES = ['Reader 1', 'Reader 2', 'Advisor', 'Methodologist', 'Stylist'];
 
 export async function getReviewHistory() {
   await delay();
   const reviews = [];
 
   works.forEach((work) => {
+    // Only look at this candidate's works
+    if (work.candidateId !== candidate.id) return;
+    
     work.movements.forEach((movement) => {
       if (!REVIEWER_ROLES.includes(movement.from.role)) return;
       reviews.push({
@@ -28,6 +31,9 @@ export async function getReviewHistory() {
   sideReviews.forEach((review) => {
     if (review.status !== 'completed') return;
     const work = works.find((item) => item.id === review.workId);
+    // Only look at side reviews for this candidate
+    if (!work || work.candidateId !== candidate.id) return;
+
     reviews.push({
       id: review.id,
       workId: review.workId,
