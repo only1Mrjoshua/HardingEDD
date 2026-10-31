@@ -29,7 +29,6 @@ export default function Login() {
     try {
       const session = await login({ email, password });
       
-      // New logic: Only Candidate or Faculty
       if (session.user.role === 'faculty') {
         navigate('/faculty', { replace: true });
       } else {
@@ -82,7 +81,9 @@ export default function Login() {
           <div className="mt-6 space-y-1 text-xs text-muted">
             <p className="font-medium text-ink mb-2">Demo Credentials</p>
             <p>Candidate: candidate@harding.test / Password123!</p>
-            <p>Faculty: elaine@harding.test / Password123!</p>
+            <p>Faculty (Advisor/Reader): elaine@harding.test / Password123!</p>
+            <p>Faculty (Reader/Methodologist): marcus@harding.test / Password123!</p>
+            <p>Faculty (Advisor/Reader): priya@harding.test / Password123!</p>
           </div>
         </div>
       </div>
