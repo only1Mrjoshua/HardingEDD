@@ -73,11 +73,19 @@ export async function getMyCandidates() {
   const myCandidates = candidates.filter(c => {
     const committee = candidateCommittees[c.id];
     return committee && Object.values(committee).includes(currentUser.id);
-  }).map(c => {
-    return { ...c, myRole: getRoleForCandidate(currentUser.id, c.id) };
   });
 
-  return clone(myCandidates);
+  // Attach the full committee to each candidate
+  const populatedCandidates = await Promise.all(myCandidates.map(async (c) => {
+    const committeeMembers = await getCommitteeForCandidate(c.id);
+    return { 
+      ...c, 
+      myRole: getRoleForCandidate(currentUser.id, c.id),
+      committee: committeeMembers
+    };
+  }));
+
+  return clone(populatedCandidates);
 }
 
 export async function approveWork({ workId, comment, file }) {
