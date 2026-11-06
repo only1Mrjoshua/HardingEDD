@@ -9,6 +9,8 @@ function daysAgo(days, hour, minute) {
   return d.toISOString();
 }
 
+export const admin = { id: 'admin-1', name: 'System Admin', email: 'admin@harding.test', role: 'admin' };
+
 export const faculty = [
   { id: 'fac-1', name: 'Dr. Elaine Whitfield', email: 'elaine@harding.test', department: 'Graduate School of Education' },
   { id: 'fac-2', name: 'Dr. Marcus Bell', email: 'marcus@harding.test', department: 'Department of Leadership Studies' },

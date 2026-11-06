@@ -22,6 +22,13 @@ import FacultyWorkDetails from './pages/faculty/WorkDetails';
 import FacultyProfile from './pages/faculty/Profile';
 import FacultySettings from './pages/faculty/Settings';
 
+// Admin imports
+import AdminLayout from './layouts/AdminLayout';
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminCandidates from './pages/admin/Candidates';
+import AdminFaculty from './pages/admin/Faculty';
+import AdminWorks from './pages/admin/Works';
+
 function RequireAuth({ children, allowedRole }) {
   const location = useLocation();
   if (!isAuthenticated()) {
@@ -74,6 +81,21 @@ export default function App() {
           <Route path="works/:id" element={<FacultyWorkDetails />} />
           <Route path="profile" element={<FacultyProfile />} />
           <Route path="settings" element={<FacultySettings />} />
+        </Route>
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth allowedRole="admin">
+              <AdminLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="candidates" element={<AdminCandidates />} />
+          <Route path="faculty" element={<AdminFaculty />} />
+          <Route path="works" element={<AdminWorks />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

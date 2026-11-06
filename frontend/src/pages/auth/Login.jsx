@@ -4,7 +4,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import { login } from '../../api/auth';
-import { isAuthenticated } from '../../utils/auth';
+import { isAuthenticated, getSession } from '../../utils/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,7 +14,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // If already logged in, redirect to the correct dashboard based on role
   if (isAuthenticated()) {
+    const session = getSession();
+    if (session?.user?.role === 'admin') {
+      return <Navigate to="/admin" replace />;
+    }
+    if (session?.user?.role === 'faculty') {
+      return <Navigate to="/faculty" replace />;
+    }
     return <Navigate to="/candidate" replace />;
   }
 
@@ -29,7 +37,10 @@ export default function Login() {
     try {
       const session = await login({ email, password });
       
-      if (session.user.role === 'faculty') {
+      // Redirect based on role
+      if (session.user.role === 'admin') {
+        navigate('/admin', { replace: true });
+      } else if (session.user.role === 'faculty') {
         navigate('/faculty', { replace: true });
       } else {
         navigate('/candidate', { replace: true });
@@ -58,7 +69,7 @@ export default function Login() {
         <div className="w-full max-w-sm">
           <div className="lg:hidden"><img src="/logo-dark.svg" alt="Harding EDD" className="h-8 w-auto" /></div>
           <h2 className="mt-6 font-serif text-2xl text-navy-900 lg:mt-0">Sign in to your portal</h2>
-          <p className="mt-1 text-sm text-muted">Use the email address on your candidate or faculty record.</p>
+          <p className="mt-1 text-sm text-muted">Use your candidate, faculty, or admin email address.</p>
 
           <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
             <Input label="Email address" name="email" type="email" autoComplete="email" placeholder="you@harding.test" value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -79,11 +90,14 @@ export default function Login() {
           </form>
 
           <div className="mt-6 space-y-1 text-xs text-muted">
-            <p className="font-medium text-ink mb-2">Demo Credentials</p>
-            <p>Candidate: candidate@harding.test / Password123!</p>
-            <p>Faculty (Advisor/Reader): elaine@harding.test / Password123!</p>
-            <p>Faculty (Reader/Methodologist): marcus@harding.test / Password123!</p>
-            <p>Faculty (Advisor/Reader): priya@harding.test / Password123!</p>
+            <p className="font-medium text-ink mb-2">Demo Credentials (Password: Password123!)</p>
+            <p><strong>Admin:</strong> admin@harding.test</p>
+            <p><strong>Candidate:</strong> candidate@harding.test</p>
+            <p><strong>Faculty (Elaine):</strong> elaine@harding.test</p>
+            <p><strong>Faculty (Marcus):</strong> marcus@harding.test</p>
+            <p><strong>Faculty (Priya):</strong> priya@harding.test</p>
+            <p><strong>Faculty (Samuel):</strong> samuel@harding.test</p>
+            <p><strong>Faculty (Hannah):</strong> hannah@harding.test</p>
           </div>
         </div>
       </div>
